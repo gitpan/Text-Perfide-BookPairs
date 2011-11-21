@@ -1,0 +1,144 @@
+#!/usr/bin/perl -ws
+use strict; use warnings;
+use Data::Dumper;
+use Text::Perfide::WordBags;
+use Text::Perfide::BookPairs;
+use utf8::all;
+
+our($bpairs,$rv,$av,$warn,$debug,$v,$nr,$same,$dv,$recalc,$normbf);
+$nr 	//= 3;
+$rv		//= 0.2;
+$av 	//= 0.4;
+$dv		//= 0.9;
+
+my $options = {};
+$options->{warn}   = 1 if defined($warn);
+$options->{debug}  = 1 if defined($debug);
+$options->{recalc} = 1 if defined($recalc);
+$options->{v}      = 1 if defined($v);
+
+$options->{nr} = $nr;
+$options->{rv} = $rv;
+$options->{av} = $av;
+$options->{dv} = $dv;
+
+if(@ARGV<1)		{ usage(); }
+elsif(@ARGV==1 and defined($same)){
+					print STDERR "File '$ARGV[0]' contains list of books to process.\n";
+					my $list = open_list($ARGV[0]);
+					calcbagfiles($list,$options);
+					calc_dupvers($list,$options);
+					rmbagfiles($list) unless defined($normbf);
+}
+elsif(@ARGV==2)	{	print STDERR "Files '$ARGV[0]' and '$ARGV[1]' are lists of books to pair.\n";
+					my ($list_file1,$list_file2) = @ARGV;
+					my ($list1,$list2) = double_open_lists($list_file1,$list_file2);
+					foreach my $file1 (@$list1){
+						listpairs([$file1,@$list2],$options);
+					}
+					rmbagfiles($list1) unless defined($normbf);
+					rmbagfiles($list2) unless defined($normbf);
+}
+else 			{	print STDERR "Finding pairs for book '$ARGV[0]'.\n";
+					calcbagfiles(\@ARGV,$options);
+					listpairs(\@ARGV,$options);
+					rmbagfiles(\@ARGV) unless defined($normbf);
+}
+
+
+sub listpairs{
+	if 		($same)		{	calc_dupvers(@_);		}
+	elsif	($bpairs)	{	calc_bpairs(@_);		}
+	else 				{	calc_default(@_);		}
+}
+
+sub usage {
+	print STDERR "Usage:\n\tpairbooks [options] book candidates*\n";
+	print STDERR "\tpairbooks [options] list1 list2\n";
+	print STDERR "\t\t(pair books from list1 with books from list2)\n"; 
+	print STDERR "\tpairbooks -same [options] book_list\n";
+	print STDERR "\t\t(find similar versions in books from book_list)\n";
+}
+
+sub open_list {
+	open LIST,'<',$_[0];
+	my @list = <LIST>;
+	chomp @list;
+	return \@list;
+}
+
+sub double_open_lists {
+	my ($list_file1,$list_file2) = @_;
+	open LIST1,'<',$list_file1 or die "Could not open '$list_file1'";
+	open LIST2,'<',$list_file2 or die "Could not open '$list_file2'";
+	my @list1 = <LIST1>;
+	my @list2 = <LIST2>;
+	chomp @list1;
+	chomp @list2;
+	return (\@list1,\@list2);
+}
+
+__END__
+
+=head1 NAME
+
+pairbooks - for a given book, finds its most probable pairs in a collection
+
+=head1 SYNOPSIS
+
+ pairbooks [options] book candidates*
+
+ pairbooks [options] book_list1 book_list2
+
+=head1 DESCRIPTION
+
+
+=head1 Options
+
+ -nr=3		Returns the 3 most similar candidates
+
+ -bpairs    Output results in .bpairs format (1 pair of books per
+			line, separated with a \t
+
+ -rv=LOW    Reject value - book pairs with pairability value 
+			lower that LOW will be automatically rejected.
+			Default is 0.2
+
+ -av=HIGH   Accept value - book pairs with pairability value 
+			equal or above HIGH will be automatically approved.
+			Default is 0.4
+
+ -dv=VAL	Duplicates value - book pairs with pairability value
+			equal or above VAL will be considered duplicates
+			(the same book in the same language).
+			Default is 0.9. Use with -same.
+
+ -warn		Comments pairs with pairability value under HIGH
+			(see -av).
+			Rejected pairs will have a leading '# X', while
+			dubious pairs will have a leading '# ?'.
+
+ -same		Instead of finding pairs, tries to find candidates
+			to be *the same book in the same language* (see -dv)
+
+			
+ -debug		Prints debug information
+
+ -recalc	Calculate file.bag even if it exists already.
+ 
+ -normbf	Do not remove .bag files at the end
+
+ -v
+
+=head1 AUTHOR
+
+Andre Santos, andrefs@cpan.org
+
+J.Joao Almeida, jj@di.uminho.pt
+
+=head1 SEE ALSO
+
+perl(1).
+
+=cut      
+
