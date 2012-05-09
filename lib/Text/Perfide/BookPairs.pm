@@ -11,13 +11,15 @@ use utf8::all;
 
 =head1 NAME
 
-Text::Perfide::BookPairs - The great new Text::Perfide::BookPairs!
+Text::Perfide::BookPairs - Find different-language pairs of books in a collection.
 
 =head1 VERSION
 
-Version 0.01_01
+Version 0.01_02
 
 =cut
+
+our $VERSION = '0.01_02';
 
 use base 'Exporter';
 our @EXPORT = (qw/	calc_dupvers
@@ -33,7 +35,6 @@ our @EXPORT = (qw/	calc_dupvers
 					print_bpairs
 									/);
 
-our $VERSION = '0.01_01';
 
 =head1 SYNOPSIS
 
@@ -330,45 +331,12 @@ Please report any bugs or feature requests to C<bug-text-perfide-bookpairs at rt
 the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Text-Perfide-BookPairs>.  I will be notified, and then you'll
 automatically be notified of progress on your bug as I make changes.
 
-
-
-
-=head1 SUPPORT
-
-You can find documentation for this module with the perldoc command.
-
-    perldoc Text::Perfide::BookPairs
-
-
-You can also look for information at:
-
-=over 4
-
-=item * RT: CPAN's request tracker (report bugs here)
-
-L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=Text-Perfide-BookPairs>
-
-=item * AnnoCPAN: Annotated CPAN documentation
-
-L<http://annocpan.org/dist/Text-Perfide-BookPairs>
-
-=item * CPAN Ratings
-
-L<http://cpanratings.perl.org/d/Text-Perfide-BookPairs>
-
-=item * Search CPAN
-
-L<http://search.cpan.org/dist/Text-Perfide-BookPairs/>
-
-=back
-
-
 =head1 ACKNOWLEDGEMENTS
 
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright 2011 Andre Santos.
+Copyright 2011 Project Natura.
 
 This program is free software; you can redistribute it and/or modify it
 under the terms of either: the GNU General Public License as published

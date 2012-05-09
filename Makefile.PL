@@ -10,6 +10,7 @@ WriteMakefile
                  },
   'INSTALLDIRS' => 'site',
   'EXE_FILES' => [
+                   'bin/calcbagfiles',
                    'bin/pairbooks'
                  ],
   'PL_FILES' => {}

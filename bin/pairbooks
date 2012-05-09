@@ -1,6 +1,5 @@
 #!/usr/bin/perl -ws
 use strict; use warnings;
-use Data::Dumper;
 use Text::Perfide::WordBags;
 use Text::Perfide::BookPairs;
 use utf8::all;
