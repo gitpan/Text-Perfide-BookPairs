@@ -13,9 +13,15 @@ my $builder = Module::Build->new(
     },
     requires => {
         'perl' => 5.006,
-    },
-    add_to_cleanup      => [ 'Text-Perfide-BookPairs-*' ],
-    create_makefile_pl => 'traditional',
-);
+		'Data::Dumper'               	=> 0,
+		'File::Basename'             	=> 0,
+		'File::Path'                 	=> 0,
+		'Text::Perfide::BookCleaner' 	=> 0,
+		'Text::Perfide::WordBags'       => 0,
+		'utf8::all'                     => 0,
+    },                                                     
+    add_to_cleanup      => [ 'Text-Perfide-BookPairs-*' ], 
+    create_makefile_pl => 'traditional',                   
+);                                                         
 
 $builder->create_build_script();

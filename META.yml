@@ -16,9 +16,15 @@ name: Text-Perfide-BookPairs
 provides:
   Text::Perfide::BookPairs:
     file: lib/Text/Perfide/BookPairs.pm
-    version: 0.01_02
+    version: 0.01_03
 requires:
+  Data::Dumper: 0
+  File::Basename: 0
+  File::Path: 0
+  Text::Perfide::BookCleaner: 0
+  Text::Perfide::WordBags: 0
   perl: 5.006
+  utf8::all: 0
 resources:
   license: http://dev.perl.org/licenses/
-version: 0.01_02
+version: 0.01_03

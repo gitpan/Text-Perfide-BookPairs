@@ -6,7 +6,13 @@ WriteMakefile
   'NAME' => 'Text::Perfide::BookPairs',
   'VERSION_FROM' => 'lib/Text/Perfide/BookPairs.pm',
   'PREREQ_PM' => {
-                   'Test::More' => 0
+                   'Data::Dumper' => 0,
+                   'File::Basename' => 0,
+                   'File::Path' => 0,
+                   'Test::More' => 0,
+                   'Text::Perfide::BookCleaner' => 0,
+                   'Text::Perfide::WordBags' => 0,
+                   'utf8::all' => 0
                  },
   'INSTALLDIRS' => 'site',
   'EXE_FILES' => [

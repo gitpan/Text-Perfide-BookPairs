@@ -15,11 +15,11 @@ Text::Perfide::BookPairs - Find different-language pairs of books in a collectio
 
 =head1 VERSION
 
-Version 0.01_02
+Version 0.01_03
 
 =cut
 
-our $VERSION = '0.01_02';
+our $VERSION = '0.01_03';
 
 use base 'Exporter';
 our @EXPORT = (qw/	calc_dupvers
